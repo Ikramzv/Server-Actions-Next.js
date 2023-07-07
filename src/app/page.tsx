@@ -1,13 +1,22 @@
 import { Metadata } from "next";
+
 import AddButton from "../components/AddButton";
 import Todos from "./Todos";
-import { getTodos } from "./data";
+
+const getTodos = async () => {
+  const todoRes = await fetch("http://localhost:3001/todos");
+  const todos = await todoRes.json();
+
+  return todos;
+};
 
 async function RootPage() {
+  const todos = await getTodos();
+
   return (
     <div className="p-4">
-      <h1 className="text-4xl font-bold mb-5">Todos ({getTodos().length})</h1>
-      <Todos todos={getTodos()} />
+      <h1 className="text-4xl font-bold mb-5">Todos ({todos.length})</h1>
+      <Todos todos={todos} />
       <AddButton />
     </div>
   );
