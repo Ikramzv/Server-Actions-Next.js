@@ -1,5 +1,5 @@
 const data: { todos: string[] } = {
-  todos: ["Learn React"],
+  todos: ["Hello world"],
 };
 
 export const getTodos = () => {

@@ -1,10 +1,9 @@
 "use server";
 
+import { revalidatePath } from "next/cache";
+import { setTodos } from "./data";
+
 export async function addTodo(todo: string) {
-  const res = await fetch("http://localhost:3000/api", {
-    body: JSON.stringify({ todo }),
-    method: "POST",
-    cache: "no-store",
-  });
-  return await res.json();
+  setTodos(todo);
+  revalidatePath("/");
 }
