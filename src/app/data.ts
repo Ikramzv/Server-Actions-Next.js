@@ -1,5 +1,3 @@
-"server only";
-
 const data: { todos: string[] } = {
   todos: ["Hello world"],
 };

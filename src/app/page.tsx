@@ -1,23 +1,28 @@
 import { Metadata } from "next";
 
+import { revalidatePath } from "next/cache";
 import AddButton from "../components/AddButton";
 import Todos from "./Todos";
 
-const getTodos = async () => {
-  const todoRes = await fetch("http://localhost:3001/todos");
-  const todos = await todoRes.json();
+const todos = ["Hello world"];
 
+const getTodos = () => todos;
+
+async function setTodos(todo: string) {
+  "use server";
+  todos.push(todo);
+  revalidatePath("/");
   return todos;
-};
+}
 
 async function RootPage() {
-  const todos = await getTodos();
+  const todos = getTodos();
 
   return (
     <div className="p-4">
       <h1 className="text-4xl font-bold mb-5">Todos ({todos.length})</h1>
       <Todos todos={todos} />
-      <AddButton />
+      <AddButton setTodos={setTodos} />
     </div>
   );
 }
