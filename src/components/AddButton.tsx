@@ -2,14 +2,15 @@
 
 import { useState } from "react";
 
-function AddButton({
-  setTodos,
-}: {
-  setTodos: (todo: string) => Promise<string[]>;
-}) {
+interface Props {
+  addTodo: (todo: string) => Promise<string[]>;
+}
+
+function AddButton({ addTodo }: Props) {
   const [value, setValue] = useState("");
+
   const add = async () => {
-    await setTodos(value);
+    await addTodo(value);
     setValue("");
   };
 

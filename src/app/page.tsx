@@ -1,19 +1,7 @@
-import { Metadata } from "next";
-
-import { revalidatePath } from "next/cache";
 import AddButton from "../components/AddButton";
 import Todos from "./Todos";
-
-const todos = ["Hello world"];
-
-const getTodos = () => todos;
-
-async function setTodos(todo: string) {
-  "use server";
-  todos.push(todo);
-  revalidatePath("/");
-  return todos;
-}
+import { addTodo, removeTodo } from "./actions";
+import { getTodos } from "./data";
 
 async function RootPage() {
   const todos = getTodos();
@@ -21,14 +9,10 @@ async function RootPage() {
   return (
     <div className="p-4">
       <h1 className="text-4xl font-bold mb-5">Todos ({todos.length})</h1>
-      <Todos todos={todos} />
-      <AddButton setTodos={setTodos} />
+      <Todos todos={todos} remove={removeTodo} />
+      <AddButton addTodo={addTodo} />
     </div>
   );
 }
-
-export const metadata: Metadata = {
-  title: "Root | Next.js",
-};
 
 export default RootPage;
